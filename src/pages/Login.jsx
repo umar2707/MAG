@@ -84,7 +84,7 @@ const Login = () => {
             <Button onClick={handleClick} disabled={isFetching}>LOGIN</Button>
             {error && <Error>Noto'g'ri kiritildi...</Error>}
             <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-            <Link>CREATE A NEW ACCOUNT</Link>
+            <Link style={{ color:"#000"}} to="/register">CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
     </Container>

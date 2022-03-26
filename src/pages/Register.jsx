@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import React from 'react'
 import { mobile } from '../responsive'
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     width: 100vw;
@@ -36,13 +37,15 @@ const Agremeent = styled.span`
     margin:20px 0px;
 `
 const Button = styled.button`
-    width: 40%;
+    /* width: 40%; */
     border: none;
     padding: 15px 20px;
     background-color: teal ;
     color: white;
     cursor: pointer;
+    margin: 0 10px;
 `
+
 const Register = () => {
   return (
     <Container>
@@ -58,8 +61,10 @@ const Register = () => {
               <Agremeent>
                   By creating an acoount , i concept to the processing  of my  personal data in accordance  with the <b>PRIVACY POLICY</b>
               </Agremeent>
-              <Button>CREATE</Button>
-              
+              <Button>CREATE ACCOUNT</Button>
+              <Link style={{textDecoration:"none", color:"#000"}} to="/login">
+                  <Button>LOGIN</Button>
+              </Link>
           </Form>
       </Wrapper>
     </Container>

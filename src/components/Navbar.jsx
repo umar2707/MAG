@@ -77,8 +77,12 @@ const Navbar = () => {
                 <Logo>Simple Shop</Logo>
             </Center>
             <Right>
-                <MenuItem>REGISTER</MenuItem>
-                <MenuItem>SIGN IN</MenuItem>
+                <Link style={{textDecoration:"none", color:"#000"}} to="/register">
+                    <MenuItem>REGISTER</MenuItem>
+                </Link>
+                <Link style={{textDecoration:"none", color:"#000"}} to="/login">
+                    <MenuItem>SIGN IN</MenuItem>
+                </Link>
                 <Link to="/cart">
                     <MenuItem>
                         <Badge badgeContent={quantity} color="primary">

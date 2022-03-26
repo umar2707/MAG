@@ -7,13 +7,14 @@ const Container = styled.div`
     display: flex;
     align-items:center;
     justify-content:center;
-    font-size:14px;
+    font-size:15px;
     font-weight:500;
+    letter-spacing: 10px;
 `
 const Announcement = () => {
   return (
     <Container>
-        Super Deal! Free Shipping on Orders Over $50
+        Yozgi aksiya !!! shoshiling
     </Container>
   )
 }
