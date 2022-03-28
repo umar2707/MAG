@@ -12,7 +12,7 @@ const App = () => {
   const user = useSelector((state)=>state.user.currentUser);
   //useSelector((state)=>state.user.currentUser);
   return(
-    <Router>
+    <BrowserRouter basename="/">
       <Switch>
           <Route exact path="/">
             <Home />  
@@ -36,7 +36,7 @@ const App = () => {
             {user ? <Redirect to="/"/> : <Register />}
           </Route> 
         </Switch>
-    </Router>
+    </BrowserRouter>
   )
 };
 
