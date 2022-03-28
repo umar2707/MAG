@@ -5,10 +5,11 @@ import styled from 'styled-components'
 import {mobile} from "../responsive"
 import {useSelector} from "react-redux"
 import { Link } from 'react-router-dom';
+import logo from '../../src/logo.jpg'
 
 const Container = styled.div`
     height: 60px;
-    ${mobile({height: "50px",marginBottom:"1.1rem"})}
+    ${mobile({height: "50px",marginBottom:"1.1rem"})};
 `;
 const Wrapper = styled.div`
     padding: 10px 20px;
@@ -47,7 +48,14 @@ const Input = styled.input`
 `
 const Logo = styled.h1`
     font-weight:bold;
-    ${mobile({fontSize: "24px"})}
+    ${mobile({fontSize: "24px"})};
+    display:flex;
+    align-items:center;
+    justify-content:center;
+`
+const Brand = styled.img`
+    ${mobile({fontSize: "24px"})};
+    width:40px;
 `
 const Language = styled.span`
     font-size:14px;
@@ -63,18 +71,20 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
     const quantity = useSelector(state=>state.cart.quantity)
+    const user = useSelector((state)=>state.user.currentUser);
   return (
     <Container>
         <Wrapper>
             <Left>
-                <Language>EN</Language>
                 <SearchContainer>
                     <Input placeholder='Search' />
                     <Search style={{color:"gray",fontSize:16}} />
                 </SearchContainer>
             </Left>
             <Center>
-                <Logo>Simple Shop</Logo>
+                <Link style={{textDecoration:"none", color:"#000"}} to="/">
+                    <Logo><Brand src={logo}/>EN5_CAPS</Logo>
+                </Link>
             </Center>
             <Right>
                 <Link style={{textDecoration:"none", color:"#000"}} to="/register">
@@ -83,13 +93,15 @@ const Navbar = () => {
                 <Link style={{textDecoration:"none", color:"#000"}} to="/login">
                     <MenuItem>SIGN IN</MenuItem>
                 </Link>
-                <Link to="/cart">
-                    <MenuItem>
-                        <Badge badgeContent={quantity} color="primary">
-                            <ShoppingCartOutlined />
-                        </Badge>
-                    </MenuItem>
-                </Link>
+                {user && 
+                    <Link to="/cart">
+                        <MenuItem>
+                            <Badge badgeContent={quantity} color="primary">
+                                <ShoppingCartOutlined />
+                            </Badge>
+                        </MenuItem>
+                    </Link>
+                }
             </Right>
         </Wrapper>
     </Container>

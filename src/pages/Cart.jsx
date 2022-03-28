@@ -6,6 +6,7 @@ import Footer from './../components/Footer';
 import { Add, Remove } from '@material-ui/icons';
 import { mobile } from '../responsive';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 // PASTDAGI HAMMASI STRIPE UCHUN U UZBDA ISHLAMIDI
 // import StripeCheckout from "react-stripe-checkout"
 // import {userRequest} from "../requestMethods"
@@ -174,7 +175,11 @@ const Cart = () => {
         <Wrapper>
             <Title>YOUR BAG</Title>
             <Top>
-                <TopButton>continue shopping</TopButton>
+                <TopButton>
+                    <Link style={{textDecoration:"none", color:"#000"}} to="/">
+                        continue shopping
+                    </Link>
+                </TopButton>
                 <TopTexts>
                     <TopText>Shopping Bag(2)</TopText>
                     <TopText>Your Wishlist (0)</TopText>

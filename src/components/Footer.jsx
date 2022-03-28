@@ -2,6 +2,7 @@ import { Facebook, Instagram, MailOutline, Phone, Room, Telegram } from '@materi
 import React from 'react'
 import styled from 'styled-components'
 import { mobile } from '../responsive'
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -48,7 +49,7 @@ const List = styled.ul`
     list-style:none;
     display:flex;
     flex-wrap:wrap;
-
+    flex-direction: column;
 `
 const ListItem = styled.li`
     width: 50%;
@@ -67,6 +68,10 @@ const ContactItem = styled.div`
 const Payment = styled.img`
     width: 50%;
 `
+const Linkk = styled.a`
+    text-decoration: none;
+    color: #000;
+`
 
 const Footer = () => {
   return (
@@ -77,36 +82,50 @@ const Footer = () => {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, praesentium?
             </Desc>
             <SocialContainer>
-                <SocialIcon color='3b5999'>
-                    <Facebook />
-                </SocialIcon>
-                <SocialIcon color='e4405f'>
-                    <Instagram />
-                </SocialIcon>
-                <SocialIcon color='55acee'>
-                    <Telegram />
-                </SocialIcon>
+                <Linkk target="_blank" href="#">
+                    <SocialIcon color='3b5999'>
+                            <Facebook />
+                    </SocialIcon>
+                </Linkk>
+                <Linkk target="_blank" href="https://www.instagram.com/en5_caps/">
+                    <SocialIcon color='e4405f'>
+                        <Instagram />
+                    </SocialIcon>
+                </Linkk>
+                <Linkk target="_blank" href="https://t.me/en5_caps">
+                    <SocialIcon color='55acee'>
+                        <Telegram />
+                    </SocialIcon>
+                </Linkk>
             </SocialContainer>
         </Left>
         <Center>
             <Title>Useful Links</Title>
             <List>
-                <ListItem>Home</ListItem>
-                <ListItem>Cart</ListItem>
-                <ListItem>Man Fashion</ListItem>
-                <ListItem>Woman Fashion</ListItem>
-                <ListItem>Aksesuar</ListItem>
-                <ListItem>Mening akkauntim</ListItem>
-                <ListItem>Aksiya</ListItem>
-                <ListItem>Terms</ListItem>
+                <Link style={{textDecoration:"none", color:"#000"}} to="/">
+                    <ListItem>Home</ListItem>
+                </Link>
+                <Link style={{textDecoration:"none", color:"#000"}} to="/cart">
+                    <ListItem>Cart</ListItem>
+                </Link>
+                <Link style={{textDecoration:"none", color:"#000"}} to="/products/man">
+                    <ListItem>Man Fashion</ListItem>
+                </Link>
+                <Link style={{textDecoration:"none", color:"#000"}} to="/products/woman">
+                    <ListItem>Woman Fashion</ListItem>
+                </Link>
             </List>
         </Center>
         <Right>
             <Title>Contact</Title>
             <ContactItem><Room style={{marginRight:'20px'}} /> Tashkent</ContactItem>
-            <ContactItem><Phone style={{marginRight:'20px'}} /> +998948900817</ContactItem>
-            <ContactItem><MailOutline style={{marginRight:'20px'}}/> simpleshop.uz@gmail.com</ContactItem>
-            <Payment src="https://i.ibb.co/Qfvn4z6/payment.png"/>
+            <Linkk href='tel:+99899 447 66 66'>
+                <ContactItem><Phone style={{marginRight:'20px'}} /> +99 899 447 66 66</ContactItem>
+            </Linkk>
+            <Linkk href='mailto: Nurbek9000.comnet@gmail.com'>
+                <ContactItem><MailOutline style={{marginRight:'20px'}}/> Nurbek9000.comnet@gmail.com</ContactItem>
+            </Linkk>
+            {/* <Payment src="https://i.ibb.co/Qfvn4z6/payment.png"/> */}
         </Right>
     </Container>
   )

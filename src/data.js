@@ -1,23 +1,23 @@
 export const sliderItems = [
     {
       id: 1,
-      img: "https://i.ibb.co/cXFnLLV/3.png",
-      title: "SUMMER SALE",
-      desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+      img: "https://i.ibb.co/cYnzLXv/photo-2022-03-28-11-04-01-removebg-preview.png",
+      title: "NEW",
+      desc: "FOR MEN",
       bg: "f5fafd",
     },
     {
       id: 2,
-      img: "https://i.ibb.co/DG69bQ4/2.png",
-      title: "AUTUMN COLLECTION",
-      desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-      bg: "fcf1ed",
+      img: "https://i.ibb.co/DghcXsc/photo-2022-03-28-11-04-05-removebg-preview.png",
+      title: "FAZ 3",
+      desc: "FOR MEN",
+      bg: "acf1ed",
     },
     {
       id: 3,
-      img: "https://i.ibb.co/cXFnLLV/3.png",
-      title: "LOUNGEWEAR LOVE",
-      desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
+      img: "https://i.ibb.co/jDCd2TW/photo-2022-03-28-11-04-08-removebg-preview.png",
+      title: "FAZ 3",
+      desc: "FOR MEN",
       bg: "fbf0f4",
     },
   ];
@@ -25,21 +25,15 @@ export const sliderItems = [
   export const categories = [
     {
       id: 1,
-      img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "SHIRT STYLE!",
-      cat: "woman",
+      img: "https://i.ibb.co/fxFvWxN/photo-2022-03-28-10-16-32.jpg",
+      title: "MAN",
+      cat: "man",
     },
     {
       id: 2,
-      img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "LOUNGEWEAR LOVE",
-      cat: "coat",
-    },
-    {
-      id: 3,
-      img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      title: "LIGHT JACKETS",
-      cat: "jeans",
+      img: "https://i.ibb.co/c8M5db9/photo-2022-03-28-10-16-48.jpg",
+      title: "WOMEN",
+      cat: "women",
     },
   ];
 

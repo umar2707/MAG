@@ -1,7 +1,11 @@
 import styled from 'styled-components'
-import React from 'react'
+import React, {useState} from 'react'
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { register } from '../redux/apiCalls';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const Container = styled.div`
     width: 100vw;
@@ -45,23 +49,53 @@ const Button = styled.button`
     cursor: pointer;
     margin: 0 10px;
 `
-
 const Register = () => {
+  const [username,setUsername] = useState("")
+  const [password,setPassword] = useState("")
+  const [email,setEmail] = useState("")
+  const [name,setName] = useState("")
+  const [lastname,setLastname] = useState("")
+  const [phone,setPhone] = useState(0)
+  const dispatch = useDispatch()
+  const handleClick = (e)=>{
+    e.preventDefault()
+    register(dispatch,{username,password,email,name,lastname,phone})
+  }
   return (
     <Container>
       <Wrapper>
           <Title>CREATE AN ACCOUNT</Title>
           <Form>
-              <Input placeholder="name"/>
-              <Input placeholder="last name"/>
-              <Input placeholder="username"/>
-              <Input placeholder="email"/>
-              <Input placeholder="password"/>
-              <Input placeholder="confirm password"/>
+              <Input 
+                placeholder="Ismiz"
+                onChange={(e)=>setName(e.target.value)}
+              />
+              <Input 
+                placeholder="Familya"
+                onChange={(e)=>setLastname(e.target.value)}
+              />
+              <Input 
+                placeholder="username"
+                onChange={(e)=>setUsername(e.target.value)}
+              />
+              <Input 
+                placeholder="email"
+                onChange={(e)=>setEmail(e.target.value)}
+              />
+              <Input 
+                placeholder="password"
+                onChange={(e)=>setPassword(e.target.value)}
+                type="password"
+              />
+              <Input 
+                placeholder="Tel. raqam"
+                onChange={(e)=>setPhone(e.target.value)}
+                type="number"
+              />
               <Agremeent>
                   By creating an acoount , i concept to the processing  of my  personal data in accordance  with the <b>PRIVACY POLICY</b>
               </Agremeent>
-              <Button>CREATE ACCOUNT</Button>
+              <Button onClick={handleClick} >CREATE ACCOUNT</Button>
               <Link style={{textDecoration:"none", color:"#000"}} to="/login">
                   <Button>LOGIN</Button>
               </Link>

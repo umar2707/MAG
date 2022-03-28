@@ -14,7 +14,7 @@ const Container = styled.div`
 const Announcement = () => {
   return (
     <Container>
-        Yozgi aksiya !!! shoshiling
+        O'zbekiston bo'ylab dostavka
     </Container>
   )
 }
