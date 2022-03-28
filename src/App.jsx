@@ -12,7 +12,7 @@ const App = () => {
   const user = useSelector((state)=>state.user.currentUser);
   //useSelector((state)=>state.user.currentUser);
   return(
-    <Router basename="/">
+    <Router basename="/index.html">
       <Switch>
           <Route exact path="/">
             <Home />  
