@@ -65,9 +65,9 @@ const ContactItem = styled.div`
     display: flex;
     align-items: center;
 `
-const Payment = styled.img`
-    width: 50%;
-`
+// const Payment = styled.img`
+//     width: 50%;
+// `
 const Linkk = styled.a`
     text-decoration: none;
     color: #000;
@@ -77,7 +77,7 @@ const Footer = () => {
   return (
     <Container>
         <Left>
-            <Logo>SIMPLE SHOP</Logo>
+            <Logo>EN5_CAPS</Logo>
             <Desc>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, praesentium?
             </Desc>

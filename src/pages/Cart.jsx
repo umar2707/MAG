@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Navbar from './../components/Navbar';
 import Announcement from './../components/Announcement';
@@ -7,18 +7,20 @@ import { Add, Remove } from '@material-ui/icons';
 import { mobile } from '../responsive';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { clearProduct } from '../redux/cartRedux'
 // PASTDAGI HAMMASI STRIPE UCHUN U UZBDA ISHLAMIDI
 // import StripeCheckout from "react-stripe-checkout"
 // import {userRequest} from "../requestMethods"
 // import { useHistory } from 'react-router-dom';
-// const KEY = "pk_test_51KhBJ2CC5mxwtVMC2CGVmidw4aEZAHyPsRJe33lz97yt4dnECIDdFank7CwSmN0FaYBRHiFUIG3Zmqyj1NLFLFSC008LdY5kNM"
+const KEY = "pk_test_51KhBJ2CC5mxwtVMC2CGVmidw4aEZAHyPsRJe33lz97yt4dnECIDdFank7CwSmN0FaYBRHiFUIG3Zmqyj1NLFLFSC008LdY5kNM"
 
 const Container = styled.div`
     
 `
 const Wrapper = styled.div`
     padding: 20px;
-    ${mobile({padding:"10px"})}
+    ${mobile({ padding: "10px" })}
 `
 const Title = styled.h1`
     font-weight: 300;
@@ -35,12 +37,12 @@ const TopButton = styled.button`
     padding: 10px;
     cursor: pointer;
     text-transform: uppercase;
-    border: ${props=>props.type === 'filled' && "none"};
-    background-color: ${props=>props.type === 'filled' ? "black" : "transparent"};
-    color: ${props=>props.type === 'filled' && "white"};
+    border: ${props => props.type === 'filled' && "none"};
+    background-color: ${props => props.type === 'filled' ? "black" : "transparent"};
+    color: ${props => props.type === 'filled' && "white"};
 `
 const TopTexts = styled.div`
-    ${mobile({display:"none"})}
+    ${mobile({ display: "none" })}
 `
 const TopText = styled.span`
     text-decoration: underline;
@@ -50,7 +52,7 @@ const TopText = styled.span`
 const Bottom = styled.div`
     display: flex;
     justify-content: space-between;
-    ${mobile({flexDirection:"column"})}
+    ${mobile({ flexDirection: "column" })}
 `
 const Info = styled.div`
     flex:3;
@@ -58,7 +60,7 @@ const Info = styled.div`
 const Product = styled.div`
     display:flex;
     justify-content:space-between;
-    ${mobile({flexDirection:"column"})}
+    ${mobile({ flexDirection: "column" })}
 `
 const ProductDetail = styled.div`
     flex:2;
@@ -83,7 +85,7 @@ const ProductColor = styled.span`
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: ${props=>props.color};
+    background-color: ${props => props.color};
 `
 const ProductSize = styled.span`
 
@@ -103,12 +105,12 @@ const ProductAmountContainer = styled.div`
 const ProductAmount = styled.div`
     font-size: 24px;
     margin: 5px;
-    ${mobile({margin:"5px 15px"})}
+    ${mobile({ margin: "5px 15px" })}
 `
 const ProductPrice = styled.div`
     font-size: 30px;
     font-weight: 200;
-    ${mobile({marginBottom:"20px"})}
+    ${mobile({ marginBottom: "20px" })}
 `
 const Hr = styled.hr`
     background-color: #eee;
@@ -129,8 +131,8 @@ const SummaryItem = styled.div`
     margin: 30px 0;
     display: flex;
     justify-content: space-between;
-    font-weight: ${props=>props.type === "total" && "500"};
-    font-size: ${props=>props.type === "total" && "24px"};
+    font-weight: ${props => props.type === "total" && "500"};
+    font-size: ${props => props.type === "total" && "24px"};
 `
 const SummaryItemText = styled.span`
     
@@ -148,7 +150,19 @@ const Button = styled.button`
 `
 
 const Cart = () => {
-    const cart = useSelector((state)=>state.cart)
+    const cart = useSelector((state) => state.cart)
+    const dispatch = useDispatch()
+    const products = useSelector((state) => state.cart.products)
+    const [clear, setClear] = useState(products)
+    const handleRemove = () => {
+        // dispatch(removeProduct(state=>state.cart.products))
+    }
+    console.log(cart);
+    const handleClear = () => {
+        setClear = [];
+        dispatch(clearProduct({ ...products, clear }))
+        console.log('1')
+    }
     //PAYMENT METHOD STRIPE
     // const [stripeToken,setStripeToken] = useState(null)
     // const history = useHistory()
@@ -169,68 +183,69 @@ const Cart = () => {
     // },[stripeToken, cart.total, history])
 
     return (
-    <Container>
-        <Navbar />
-        <Announcement />
-        <Wrapper>
-            <Title>YOUR BAG</Title>
-            <Top>
-                <TopButton>
-                    <Link style={{textDecoration:"none", color:"#000"}} to="/">
-                        continue shopping
-                    </Link>
-                </TopButton>
-                <TopTexts>
-                    <TopText>Shopping Bag(2)</TopText>
-                    <TopText>Your Wishlist (0)</TopText>
-                </TopTexts>
-                <TopButton type="filled">checkout now</TopButton>
-            </Top>
-            <Bottom>
-                <Info>
-                   {cart.products.map(product=>(
-                    <Product>
-                            <ProductDetail>
-                                <Image src={product.img}/>
-                                <Details>
-                                    <ProductName><b>Product: </b>{product.title}</ProductName>
-                                    <ProductId><b>ID: </b>{product._id}</ProductId>
-                                    <ProductColor color={product.color}/>
-                                    <ProductSize><b>Size: </b>{product.size}</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>{product.quantity}</ProductAmount>
-                                    <Remove />
-                                </ProductAmountContainer>
-                                <ProductPrice>$ {product.price*product.quantity}</ProductPrice>
-                            </PriceDetail>
-                        </Product>
-                    ))}
-                    <Hr/>
-                </Info>
-                <Summary>
-                    <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-                    <SummaryItem>
-                        <SummaryItemText>Subtotal</SummaryItemText>
-                        <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
-                    </SummaryItem>
-                    <SummaryItem>
-                        <SummaryItemText>Estimated Shipping</SummaryItemText>
-                        <SummaryItemPrice>$ 5.90</SummaryItemPrice>
-                    </SummaryItem>
-                    <SummaryItem>
-                        <SummaryItemText>Shipping Discount</SummaryItemText>
-                        <SummaryItemPrice>$ -5.90</SummaryItemPrice>
-                    </SummaryItem>
-                    <SummaryItem type="total">
-                        <SummaryItemText >Total</SummaryItemText>
-                        <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
-                    </SummaryItem>
-                    {/* STRIPE  */}
-                    {/* <StripeCheckout
+        <Container>
+            <Navbar />
+            <Announcement />
+            <Wrapper>
+                <Title>YOUR BAG</Title>
+                <Top>
+                    <TopButton>
+                        <Link style={{ textDecoration: "none", color: "#000" }} to="/">
+                            continue shopping
+                        </Link>
+                    </TopButton>
+                    <TopTexts>
+                        <TopText onClick={handleClear}>Savatni tozalash</TopText>
+                        <TopText>Your Wishlist (0)</TopText>
+                    </TopTexts>
+                    <TopButton type="filled">checkout now</TopButton>
+                </Top>
+                <Bottom>
+                    <Info>
+                        console.log(cart);
+                        {cart.products.map((product) => (
+                            <Product>
+                                <ProductDetail>
+                                    <Image src={product?.img} />
+                                    <Details>
+                                        <ProductName><b>Product: </b>{product?.title}</ProductName>
+                                        <ProductId><b>ID: </b>{product?._id}</ProductId>
+                                        <ProductColor color={product?.color} />
+                                        <ProductSize><b>Size: </b>{product?.size}</ProductSize>
+                                    </Details>
+                                </ProductDetail>
+                                <PriceDetail>
+                                    <ProductAmountContainer>
+                                        <Add />
+                                        <ProductAmount>{product?.quantity}</ProductAmount>
+                                        <Remove onClick={handleRemove} style={{ border: "1px solid", cursor: "pointer" }} />
+                                    </ProductAmountContainer>
+                                    <ProductPrice>{product?.price * product?.quantity} so'm</ProductPrice>
+                                </PriceDetail>
+                            </Product>
+                        ))}
+                        <Hr />
+                    </Info>
+                    <Summary>
+                        <SummaryTitle>Buyurtma hisoboti</SummaryTitle>
+                        <SummaryItem>
+                            <SummaryItemText>Subtotal</SummaryItemText>
+                            <SummaryItemPrice>{cart.total} so'm</SummaryItemPrice>
+                        </SummaryItem>
+                        <SummaryItem>
+                            <SummaryItemText>Dostavka</SummaryItemText>
+                            <SummaryItemPrice>30.000 so'm</SummaryItemPrice>
+                        </SummaryItem>
+                        <SummaryItem>
+                            <SummaryItemText>Dostavka uchun chegirma</SummaryItemText>
+                            <SummaryItemPrice>-30.000 so'm</SummaryItemPrice>
+                        </SummaryItem>
+                        <SummaryItem type="total">
+                            <SummaryItemText >Total</SummaryItemText>
+                            <SummaryItemPrice>{cart.total} so'm</SummaryItemPrice>
+                        </SummaryItem>
+                        {/* STRIPE  */}
+                        {/* <StripeCheckout
                         name="SIMPLE SHOP"
                         image="https://avatars.githubusercontent.com/u/63209107?v=4"
                         billingAddress
@@ -242,13 +257,13 @@ const Cart = () => {
                     >
                         
                     </StripeCheckout> */}
-                    <Button>CHECKOUT NOW</Button>
-                </Summary>
-            </Bottom>
-        </Wrapper>
-        <Footer />
-    </Container>
-  )
+                        <Button>CHECKOUT NOW</Button>
+                    </Summary>
+                </Bottom>
+            </Wrapper>
+            <Footer />
+        </Container>
+    )
 }
 
 export default Cart

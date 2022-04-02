@@ -4,7 +4,6 @@ import { mobile } from '../responsive'
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { register } from '../redux/apiCalls';
-import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 
 const Container = styled.div`

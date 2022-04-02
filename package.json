@@ -1,6 +1,6 @@
 {
   "name": "new",
-  "homepage": "https://en5caps.netlify.app",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

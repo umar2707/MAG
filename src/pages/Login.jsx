@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { login } from '../redux/apiCalls'
 import { mobile } from '../responsive'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 
 const Container = styled.div`
@@ -48,12 +49,12 @@ const Button = styled.button`
       cursor: not-allowed;
     }
 `
-const Link = styled.a`
-    margin:5px 0;
-    font-size: 12px;
-    text-decoration: underline;
-    cursor: pointer;
-`
+// const Link = styled.a`
+//     margin:5px 0;
+//     font-size: 12px;
+//     text-decoration: underline;
+//     cursor: pointer;
+// `
 const Error = styled.span`
   color:red;
 `
@@ -84,7 +85,7 @@ const Login = () => {
               />
             <Button onClick={handleClick} disabled={isFetching}>LOGIN</Button>
             {error && <Error>Noto'g'ri kiritildi...</Error>}
-            <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+            {/* <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link> */}
             <Link style={{ color:"#000"}} to="/register">CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
