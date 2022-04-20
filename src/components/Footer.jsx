@@ -77,7 +77,7 @@ const Footer = () => {
   return (
     <Container>
         <Left>
-            <Logo>EN5_CAPS</Logo>
+            <Logo>EN5_COMPANY</Logo>
             <Desc>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, praesentium?
             </Desc>

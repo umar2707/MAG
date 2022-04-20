@@ -28,7 +28,7 @@ const Info = styled.div`
   align-items:center;
 `
 const Title = styled.h1`
-  color:white;
+  color: #${props=>props.color};
   margin-bottom:20px;
 `
 const Button = styled.button`
@@ -40,15 +40,14 @@ const Button = styled.button`
   font-weight:600;
 `
 
-
 const CategoryItem = ({item}) => {
   return (
     <Container>
       <Link to = {`/products/${item.cat}`}>
         <Image src={item.img}/>
         <Info>
-          <Title>{item.title}</Title>
-          <Button>SHOP NOW</Button>
+          <Title color={item.color}>{item.title}</Title>
+          <Button>Batafsil</Button>
         </Info>
       </Link>
     </Container>

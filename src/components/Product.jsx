@@ -1,9 +1,10 @@
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@material-ui/icons'
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux';
 import { addProduct } from '../redux/cartRedux';
+import { useSelector } from 'react-redux';
 
 const Info = styled.div`
     width:100%;
@@ -65,9 +66,14 @@ const Icon = styled.div`
 
 const Product = ({item}) => {
     const dispatch = useDispatch();
-    console.log(item);
+    const user = useSelector((state)=>state.user.currentUser)
     const handleClickCart = ()=>{
-        dispatch(addProduct({ item }))
+        if(user){
+            dispatch(addProduct({ item }))
+        }else{
+            console.log('=');
+            return  true
+        }
     };
   return (
     <Container>

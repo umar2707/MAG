@@ -9,7 +9,8 @@ import Newsletter from '../components/Newsletter'
 import { mobile } from '../responsive'
 import { publicRequest } from './../requestMethods';
 import { addProduct } from '../redux/cartRedux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { formatNumber } from 'accounting-js'
 
 const Container = styled.div`
 
@@ -133,8 +134,9 @@ const Product = () => {
             setQuantity(quantity+1)
         }
     }
+    const user = useSelector((state)=>state.user.currentUser);
     const handleClickCart = ()=>{
-        dispatch(addProduct({ ...product, quantity, color, size }))
+        user ? dispatch(addProduct({ ...product, quantity, color, size })) : (alert("Siz ro'yxatdan o'tmagansiz"))
     };
 
   return (
@@ -148,19 +150,19 @@ const Product = () => {
             <InfoContainer>
                 <Title>{product.title}</Title> 
                 <Desc>{product.desc}</Desc>
-                <Price>$ {product.price}</Price>
+                <Price>{formatNumber(product.price)  }</Price>
                 <FilterContainer>
                     <Filter>
                         <FilterTitle>Color</FilterTitle>
-                        {product.color?.map((c)=>(
-                            <FilterColor color={c} key={c} onClick={()=> setColor(c)}/>
+                        {product.color?.map((c,i)=>(
+                            <FilterColor color={c} key={i} onClick={()=> setColor(c)}/>
                         ))}
                     </Filter>
                     <Filter>
                         <FilterTitle>Size</FilterTitle>
                         <FilterSize onChange={(e)=>setSize(e.target.value)}>
-                            {product.size?.map((s)=>(
-                                <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                            {product.size?.map((s,i)=>(
+                                <FilterSizeOption key={i}>{s}</FilterSizeOption>
                             ))}
                         </FilterSize>
                     </Filter>

@@ -9,7 +9,7 @@ import 'react-phone-input-2/lib/style.css'
 const Container = styled.div`
     width: 100vw;
     height: 100vh;
-    background:  url("https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") center  ;
+    background:  url("https://i.ibb.co/c8M5db9/photo-2022-03-28-10-16-48.jpg") center  ;
     display: flex;
     align-items: center;
     justify-content: center;

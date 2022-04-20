@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 const Container = styled.div`
     width: 100vw;
     height: 100vh;
-    background:  url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") center  ;
+    background:  url("https://i.ibb.co/fxFvWxN/photo-2022-03-28-10-16-32.jpg") center  ;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,7 +64,7 @@ const Login = () => {
   const [username,setUsername] = useState("")
   const [password,setPassword] = useState("")
   const dispatch = useDispatch()
-  const {isFetching,error} = useSelector((state)=>state.user)
+  const {isFetching} = useSelector((state)=>state.user)
   const handleClick = (e)=>{
     e.preventDefault()
     login(dispatch,{username, password})
@@ -84,7 +84,7 @@ const Login = () => {
               onChange={(e)=>setPassword(e.target.value)}
               />
             <Button onClick={handleClick} disabled={isFetching}>LOGIN</Button>
-            {error && <Error>Noto'g'ri kiritildi...</Error>}
+            {isFetching && <Error>Noto'g'ri kiritildi...</Error>}
             {/* <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link> */}
             <Link style={{ color:"#000"}} to="/register">CREATE A NEW ACCOUNT</Link>
         </Form>

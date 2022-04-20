@@ -1,11 +1,13 @@
 import { Search ,ShoppingCartOutlined} from '@material-ui/icons';
 import {Badge} from '@material-ui/core'
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import {mobile} from "../responsive"
-import {useSelector} from "react-redux"
-import { Link } from 'react-router-dom';
+import {useSelector,useDispatch} from "react-redux"
+import { Link, Redirect } from 'react-router-dom';
 import logo from '../../src/logo.jpg'
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
+import { logout } from '../redux/apiCalls';
 
 const Container = styled.div`
     height: 60px;
@@ -69,12 +71,26 @@ const MenuItem = styled.div`
     margin-left:25px;
     ${mobile({fontSize: "12px", marginLeft:"10px",border:"1px solid",padding:"5px 10px"})}
 `
+const Button = styled.button`
+    cursor:pointer;
+    background-color: transparent;
+    color:#000;
+    border:none;
+    outline: none;
+`
 
 const Navbar = () => {
     const quantity = useSelector(state=>state.cart.quantity)
-    const user = useSelector((state)=>state.user.currentUser);
+    const user = useSelector(state=>state.user.currentUser);
+    const dispatch = useDispatch()
+    const [exit,setExit] = useState(false)
+    const handleLogOut = (e)=>{
+        e.preventDefault()
+        logout(dispatch)
+        setExit(true)
+    }
   return (
-    <Container>
+    !exit ? (<Container>
         <Wrapper>
             <Left>
                 <SearchContainer>
@@ -88,24 +104,35 @@ const Navbar = () => {
                 </Link>
             </Center>
             <Right>
-                <Link style={{textDecoration:"none", color:"#000"}} to="/register">
-                    <MenuItem>REGISTER</MenuItem>
-                </Link>
-                <Link style={{textDecoration:"none", color:"#000"}} to="/login">
-                    <MenuItem>SIGN IN</MenuItem>
-                </Link>
-                {user && 
-                    <Link to="/cart">
-                        <MenuItem>
-                            <Badge badgeContent={quantity} color="primary">
-                                <ShoppingCartOutlined />
-                            </Badge>
-                        </MenuItem>
-                    </Link>
+                {user ? (
+                    <div style={{display:"flex",backgroundColor:"transparent",outline:'none'}}>
+                        <Button onClick={handleLogOut}>
+                            <MenuItem>
+                                <ExitToAppOutlinedIcon/>
+                            </MenuItem>
+                        </Button>
+                        <Link to="/cart">
+                            <MenuItem>
+                                <Badge badgeContent={quantity} color="primary">
+                                    <ShoppingCartOutlined />
+                                </Badge>
+                            </MenuItem>
+                        </Link>
+                    </div>) :(
+                    <div style={{display:"flex"}}>
+                        <Link style={{textDecoration:"none", color:"#000"}} to="/register">
+                            <MenuItem>REGISTER</MenuItem>
+                        </Link> 
+                        <Link style={{textDecoration:"none", color:"#000"}} to="/login">
+                            <MenuItem>SIGN IN</MenuItem>
+                        </Link>
+                    </div>
+                    )
                 }
             </Right>
         </Wrapper>
-    </Container>
+    </Container>) : <Redirect to='/' />
+    
   )
 }
 

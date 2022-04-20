@@ -1,20 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Navbar from './../components/Navbar';
 import Announcement from './../components/Announcement';
 import Footer from './../components/Footer';
-import { Add, Remove } from '@material-ui/icons';
 import { mobile } from '../responsive';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { clearProduct } from '../redux/cartRedux'
-// PASTDAGI HAMMASI STRIPE UCHUN U UZBDA ISHLAMIDI
-// import StripeCheckout from "react-stripe-checkout"
-// import {userRequest} from "../requestMethods"
-// import { useHistory } from 'react-router-dom';
-const KEY = "pk_test_51KhBJ2CC5mxwtVMC2CGVmidw4aEZAHyPsRJe33lz97yt4dnECIDdFank7CwSmN0FaYBRHiFUIG3Zmqyj1NLFLFSC008LdY5kNM"
-
+import { userRequest } from '../requestMethods';
+import { formatNumber} from 'accounting-js'
 const Container = styled.div`
     
 `
@@ -151,43 +146,31 @@ const Button = styled.button`
 
 const Cart = () => {
     const cart = useSelector((state) => state.cart)
+    const userId = useSelector((state) => state.user.currentUser?._id)
     const dispatch = useDispatch()
-    const products = useSelector((state) => state.cart.products)
-    const [clear, setClear] = useState(products)
-    const handleRemove = () => {
-        // dispatch(removeProduct(state=>state.cart.products))
+    const handleCartClear = ()=>{
+        dispatch(clearProduct())
     }
-    console.log(cart);
-    const handleClear = () => {
-        setClear = [];
-        dispatch(clearProduct({ ...products, clear }))
-        console.log('1')
+    const ast = {
+        userId:userId,
+        products:cart.products,
+        amount: cart.total
     }
-    //PAYMENT METHOD STRIPE
-    // const [stripeToken,setStripeToken] = useState(null)
-    // const history = useHistory()
-    // const onToken = (token)=>{
-    //     setStripeToken(token)
-    // }
-    // useEffect(()=>{
-    //     const makeRequest = async ()=>{
-    //         try{
-    //             const res = await userRequest.post("/checkout/payment", {
-    //                 tokenId:stripeToken.id,
-    //                 amount: 500,
-    //             })
-    //             history.push("/success", {data:res.data})
-    //         }catch{}
-    //     }
-    //     stripeToken &&  makeRequest()
-    // },[stripeToken, cart.total, history])
-
+    const handlePush = async ()=>{
+        try{
+            const res = await userRequest.post("/orders/",ast)
+            alert("Buyurtma berildi tez orada Admin siz bilan bog'lanadi")
+            handleCartClear()
+        }catch(err){
+            console.log(err);
+        }
+    }
     return (
         <Container>
             <Navbar />
             <Announcement />
             <Wrapper>
-                <Title>YOUR BAG</Title>
+                <Title>SIZNING SAVATINGIZ</Title>
                 <Top>
                     <TopButton>
                         <Link style={{ textDecoration: "none", color: "#000" }} to="/">
@@ -195,16 +178,15 @@ const Cart = () => {
                         </Link>
                     </TopButton>
                     <TopTexts>
-                        <TopText onClick={handleClear}>Savatni tozalash</TopText>
+                        <TopText onClick={handleCartClear}>Savatni tozalash</TopText>
                         <TopText>Your Wishlist (0)</TopText>
                     </TopTexts>
-                    <TopButton type="filled">checkout now</TopButton>
+                    {/* <TopButton type="filled">checkout now</TopButton> */}
                 </Top>
                 <Bottom>
                     <Info>
-                        console.log(cart);
-                        {cart.products.map((product) => (
-                            <Product>
+                        {cart.products.map((product,i) => (
+                            <Product key={i}>
                                 <ProductDetail>
                                     <Image src={product?.img} />
                                     <Details>
@@ -216,11 +198,9 @@ const Cart = () => {
                                 </ProductDetail>
                                 <PriceDetail>
                                     <ProductAmountContainer>
-                                        <Add />
                                         <ProductAmount>{product?.quantity}</ProductAmount>
-                                        <Remove onClick={handleRemove} style={{ border: "1px solid", cursor: "pointer" }} />
                                     </ProductAmountContainer>
-                                    <ProductPrice>{product?.price * product?.quantity} so'm</ProductPrice>
+                                    <ProductPrice>{formatNumber(product?.price*product.quantity)} so'm</ProductPrice>
                                 </PriceDetail>
                             </Product>
                         ))}
@@ -230,34 +210,13 @@ const Cart = () => {
                         <SummaryTitle>Buyurtma hisoboti</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>{cart.total} so'm</SummaryItemPrice>
-                        </SummaryItem>
-                        <SummaryItem>
-                            <SummaryItemText>Dostavka</SummaryItemText>
-                            <SummaryItemPrice>30.000 so'm</SummaryItemPrice>
-                        </SummaryItem>
-                        <SummaryItem>
-                            <SummaryItemText>Dostavka uchun chegirma</SummaryItemText>
-                            <SummaryItemPrice>-30.000 so'm</SummaryItemPrice>
+                            <SummaryItemPrice>{formatNumber(cart.total)} so'm</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem type="total">
-                            <SummaryItemText >Total</SummaryItemText>
-                            <SummaryItemPrice>{cart.total} so'm</SummaryItemPrice>
+                            <SummaryItemText >Total: </SummaryItemText>
+                            <SummaryItemPrice>{formatNumber(cart.total)} so'm</SummaryItemPrice>
                         </SummaryItem>
-                        {/* STRIPE  */}
-                        {/* <StripeCheckout
-                        name="SIMPLE SHOP"
-                        image="https://avatars.githubusercontent.com/u/63209107?v=4"
-                        billingAddress
-                        shippingAddress
-                        description={`Your total is $${cart.total}`}
-                        amount={cart.total*100}
-                        token={onToken}
-                        stripeKey={KEY}
-                    >
-                        
-                    </StripeCheckout> */}
-                        <Button>CHECKOUT NOW</Button>
+                        <Button onClick={handlePush}>BUYURTMA QOLDIRISH</Button>
                     </Summary>
                 </Bottom>
             </Wrapper>
