@@ -161,7 +161,6 @@ const Cart = () => {
             const res = await userRequest.post("/orders/",ast)
             alert("Buyurtma berildi tez orada Admin siz bilan bog'lanadi")
             handleCartClear()
-            
         }catch(err){
             console.log(err);
         }
